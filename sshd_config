@@ -1,0 +1,16 @@
+Port 22
+ListenAddress 0.0.0.0
+Protocol 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+SyslogFacility AUTH
+LogLevel INFO
+LoginGraceTime 120
+PermitRootLogin yes
+PermitUserEnvironment yes
+StrictModes yes
+PubkeyAuthentication yes
+AuthorizedKeysFile    %h/.ssh/authorized_keys
+PasswordAuthentication yes
+Subsystem sftp /usr/lib/ssh/sftp-server
