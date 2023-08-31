@@ -5,8 +5,7 @@ RUN echo -e 'https://mirrors.aliyun.com/alpine/v3.9/main/\nhttps://mirrors.aliyu
     apk update && \
     apk add --no-cache bash curl busybox-extras net-tools nss vim ttf-dejavu openssh && \
     ssh-keygen -A && \
-    rm -rf /var/cache/apk/* && \
-    echo "root:root" | chpasswd
+    rm -rf /var/cache/apk/*
 
 # 设置ssh配置
 COPY sshd_config /etc/ssh/sshd_config
@@ -17,7 +16,9 @@ COPY authorized_keys /root/.ssh/authorized_keys
 # 设置环境变量文件
 COPY .profile /root/.profile
 
-EXPOSE 22
+#设置启动脚本
+COPY start.sh /root/start.sh
+RUN chmod +x /root/start.sh
 
-# 启动sshd服务，并使用root用户登录
-CMD ["/usr/sbin/sshd", "-D", "-e"]
+# 设置项目启动时脚本
+ENTRYPOINT ["sh","-c","/root/start.sh"]
