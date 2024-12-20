@@ -36,8 +36,9 @@ RUN ssh-keygen -A
 # 设置ssh配置
 COPY sshd_config /etc/ssh/sshd_config
 
-# 设置root账户的公钥
+# 设置root账户的公钥 及其文件权限
 COPY authorized_keys /root/.ssh/authorized_keys
+RUN chmod 600 /root/.ssh/authorized_keys
 
 # 设置环境变量文件
 COPY .profile /root/.profile
